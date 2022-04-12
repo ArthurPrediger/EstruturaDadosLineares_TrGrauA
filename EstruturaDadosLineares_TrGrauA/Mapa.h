@@ -7,6 +7,9 @@
 class Mapa : public IMapa
 {
 public:
+	Mapa() = default;
+	Mapa(const Mapa& mapa) = delete;
+	Mapa& operator =(Mapa mapa) = delete;
 	void CarregarMapa(const std::string& nomeArquivo) override
 	{
 		std::ifstream file(nomeArquivo);
@@ -63,10 +66,12 @@ public:
 	{
 		delete[] caracteres;
 		delete[] visitadas;
+		caracteres = nullptr;
+		visitadas = nullptr;
 	}
 private:
-	int linhas;
-	int colunas;
-	char* caracteres;
-	bool* visitadas;
+	int linhas = 0;
+	int colunas = 0;
+	char* caracteres = nullptr;
+	bool* visitadas = nullptr;
 };
