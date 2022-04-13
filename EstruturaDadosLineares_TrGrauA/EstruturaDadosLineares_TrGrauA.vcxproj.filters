@@ -26,5 +26,8 @@
     <ClInclude Include="Mapa.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Elemento.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

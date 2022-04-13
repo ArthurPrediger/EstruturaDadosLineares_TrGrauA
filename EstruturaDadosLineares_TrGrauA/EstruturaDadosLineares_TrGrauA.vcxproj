@@ -142,6 +142,7 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Elemento.h" />
     <ClInclude Include="IMapa.h" />
     <ClInclude Include="Mapa.h" />
   </ItemGroup>

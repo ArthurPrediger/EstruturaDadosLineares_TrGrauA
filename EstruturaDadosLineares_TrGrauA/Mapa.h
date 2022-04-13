@@ -1,8 +1,15 @@
 #pragma once
 
-#include "IMapa.h"
 #include <iostream>
 #include <fstream>
+#include "IMapa.h"
+#include "Elemento.h"
+
+struct PosArray
+{
+	int linha = -1;
+	int coluna = -1;
+};
 
 class Mapa : public IMapa
 {
@@ -45,9 +52,23 @@ public:
 	}
 	void Reconhecer() override
 	{
+		elementos = new Elemento[linhas * colunas];
+		auto pos = ProximaNaoVisitada();
+		do
+		{
+			if (pos.linha != -1 && pos.coluna != -1)
+			{
+				char tipoElemento = caracteres[pos.linha * colunas + pos.coluna];
 
+				int nUnidades = ReconhecerRecursiva(tipoElemento, pos.linha, pos.coluna);
+
+				AdicionarElemento(tipoElemento, nUnidades);
+			}
+
+			pos = ProximaNaoVisitada();
+		} while (pos.linha != -1 && pos.coluna != -1);
 	}
-	void ExibirMatriz() override
+	void ExibirMatriz() const override
 	{
 		for (int i = 0; i < linhas; i++)
 		{
@@ -58,20 +79,88 @@ public:
 			std::cout << std::endl;
 		}
 	}
-	void ExibirElementos() override
+	void ExibirElementos() const override
 	{
-
+		std::cout << "Relatorio do Reconhecimento" << std::endl;
+		std::cout << "===========================" << std::endl;
+		
+		for (int i = 0; i < nElementos; i++)
+		{
+			elementos[i].ToString();
+		}
 	}
 	~Mapa()
 	{
 		delete[] caracteres;
 		delete[] visitadas;
+		delete[] elementos;
 		caracteres = nullptr;
 		visitadas = nullptr;
+		elementos = nullptr;
+	}
+private:
+	const PosArray& ProximaNaoVisitada() const
+	{
+		PosArray naoVisitada;
+		for (int i = 0; i < linhas; i++)
+		{
+			for (int j = 0; j < colunas; j++)
+			{
+				if (visitadas[i * colunas + j] == false)
+				{
+					naoVisitada = { i , j };
+					return naoVisitada;
+				}
+			}
+		}
+		return naoVisitada;
+	}
+	int ReconhecerRecursiva(char tipoElemento, int linha, int coluna)
+	{
+		int pos = linha * colunas + coluna;
+		if (linha >= 0 && coluna >= 0 &&
+			linha < linhas && coluna < colunas &&
+			caracteres[pos] == tipoElemento &&
+			visitadas[pos] == false)
+		{
+			visitadas[pos] = true;
+			return { 1 +
+				ReconhecerRecursiva(tipoElemento, linha - 1, coluna) +
+				ReconhecerRecursiva(tipoElemento, linha + 1, coluna) +
+				ReconhecerRecursiva(tipoElemento, linha, coluna - 1) +
+				ReconhecerRecursiva(tipoElemento, linha, coluna + 1) };
+		}
+
+		return 0;
+	}
+	void AdicionarElemento(char caractere, int nUnidades)
+	{
+		switch (caractere)
+		{
+			case '*':
+				elementos[nElementos++] = Agua(caractere, "Agua", nUnidades);
+				break;
+			case '+':
+				elementos[nElementos++] = Arvore(caractere, "Arvore", nUnidades);
+				break;
+			case ' ':
+				elementos[nElementos++] = Campo(caractere, "Campo", nUnidades);
+				break;
+			case '=':
+				elementos[nElementos++] = Cerca(caractere, "Cerca", nUnidades);
+				break;
+			case '/':
+				elementos[nElementos++] = Edificacao(caractere, "Edificacao", nUnidades);
+				break;
+			default:
+				break;
+		}
 	}
 private:
 	int linhas = 0;
 	int colunas = 0;
 	char* caracteres = nullptr;
 	bool* visitadas = nullptr;
+	Elemento* elementos = nullptr;
+	int nElementos = 0;
 };
