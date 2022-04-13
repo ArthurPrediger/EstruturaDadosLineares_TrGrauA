@@ -99,7 +99,7 @@ public:
 		elementos = nullptr;
 	}
 private:
-	const PosArray& ProximaNaoVisitada() const
+	PosArray ProximaNaoVisitada() const
 	{
 		PosArray naoVisitada;
 		for (int i = 0; i < linhas; i++)
