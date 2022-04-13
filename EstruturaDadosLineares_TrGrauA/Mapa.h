@@ -86,7 +86,7 @@ public:
 		
 		for (int i = 0; i < nElementos; i++)
 		{
-			elementos[i].ToString();
+			std::cout << elementos[i].ToString() << std::endl;
 		}
 	}
 	~Mapa()

@@ -12,9 +12,9 @@ public:
 		unidades(unidades)
 	{};
 	//bool Equals(const Elemento& rhs){} Não se se precisa implementar
-	void ToString()
+	std::string ToString()
 	{
-		std::cout << nome << " (" << caractere << ") que tem " << unidades << " unidade(s)" << std::endl;
+		return std::string(nome + " (" + caractere + ") que tem " + std::to_string(unidades) + " unidade(s)");
 	}
 private:
 	friend class Mapa;
