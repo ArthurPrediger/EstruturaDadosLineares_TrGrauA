@@ -11,7 +11,7 @@ public:
 		nome(nome),
 		unidades(unidades)
 	{};
-	//bool Equals(const Elemento& rhs){} Não se se precisa implementar
+	//bool Equals(const Elemento& rhs){} Não sei se precisa implementar
 	std::string ToString()
 	{
 		return std::string(nome + " (" + caractere + ") que tem " + std::to_string(unidades) + " unidade(s)");
@@ -20,9 +20,9 @@ private:
 	friend class Mapa;
 	Elemento() = default;
 private:
-	char caractere;
-	std::string nome;
-	int unidades;
+	char caractere = 0;
+	std::string nome = "";
+	int unidades = 0;
 };
 
 class Agua : public Elemento
