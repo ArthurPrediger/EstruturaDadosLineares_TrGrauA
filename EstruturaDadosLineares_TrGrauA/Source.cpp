@@ -1,14 +1,31 @@
 
 #include "Mapa.h"
+#include <vector>
+
+class MapaTest
+{
+public:
+	static void Teste()
+	{
+		Mapa mapa;
+
+		try
+		{
+			mapa.CarregarMapa("ARQUIVO DO MAPA.txt");
+		}
+		catch (const std::ifstream::failure& e)
+		{
+			std::cout << e.what() << std::endl;
+		}
+		mapa.ExibirMatriz();
+		mapa.Reconhecer();
+		mapa.ExibirElementos();
+	}
+};
 
 int main()
 {
-	Mapa mapa;
-
-	mapa.CarregarMapa("ARQUIVO DO MAPA.txt");
-	mapa.ExibirMatriz();
-	mapa.Reconhecer();
-	mapa.ExibirElementos();
+	MapaTest::Teste();
 
 	return 1;
 }

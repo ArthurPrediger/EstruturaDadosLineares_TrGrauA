@@ -11,8 +11,7 @@ public:
 		nome(nome),
 		unidades(unidades)
 	{};
-	//bool Equals(const Elemento& rhs){} Não sei se precisa implementar
-	std::string ToString()
+	std::string ToString() const
 	{
 		return std::string(nome + " (" + caractere + ") que tem " + std::to_string(unidades) + " unidade(s)");
 	}

@@ -47,7 +47,7 @@ public:
 		}
 		else
 		{
-			std::cout << "Arquivo de mapa nao encontrado." << std::endl;
+			throw std::ifstream::failure("Erro ao abrir arquivo de leitura");
 		}
 	}
 	void Reconhecer() override
