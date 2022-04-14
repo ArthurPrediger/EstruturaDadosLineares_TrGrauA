@@ -1,6 +1,5 @@
 
 #include "Mapa.h"
-#include <vector>
 
 class MapaTest
 {
